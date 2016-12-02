@@ -1,0 +1,28 @@
+﻿@model PizzaStoreMVC2.Client.ViewModels.PizzaSiteModel
+
+@{
+    ViewBag.Title = "PurchaseComplete";
+}
+
+<h2>Purchase Complete</h2>
+<table>
+   <tr>
+      <th>
+         @Html.Label("Order Name")
+      </th>
+  </tr>
+   @{
+      foreach (var item in Model.orderhistory)
+      {
+         <tr>
+            <td>
+               @Html.DisplayFor(m => item.Name)
+            </td>
+         </tr>
+      }
+
+   }
+   
+
+
+</table>

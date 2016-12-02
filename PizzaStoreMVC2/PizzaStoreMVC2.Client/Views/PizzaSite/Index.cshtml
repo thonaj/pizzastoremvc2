@@ -1,0 +1,19 @@
+﻿@model PizzaStoreMVC2.Client.ViewModels.PizzaSiteModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Choose Your Store</h2>
+
+@using (Html.BeginForm("Index", "PizzaSite", FormMethod.Post))
+{
+   <div>
+      @Html.DropDownListFor(m => m.storeString, Model.StoreOptions, new { @class = "btn btn-default dropdown-toggle" })
+     
+   </div>
+
+   <div>
+      <button type="submit" class="btn btn-primary"> Select This Store</button>
+   </div>
+}

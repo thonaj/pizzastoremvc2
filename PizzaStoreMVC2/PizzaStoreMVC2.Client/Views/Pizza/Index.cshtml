@@ -1,0 +1,76 @@
+﻿@model IEnumerable<PizzaStoreMVC2.Client.DomainModels.PizzaModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("Index", "Pizza", FormMethod.Post))
+{
+   <div>
+      @Html.DropDownListFor(m => m.FirstOrDefault().PizzaOptions.Toppings, Model.FirstOrDefault().SauceOptions, new { @class = "btn btn-default dropdown-toggle" })
+      @Html.DropDownListFor(m => m.FirstOrDefault().PizzaOptions.Crust, Model.FirstOrDefault().CrustOptions, new { @class = "btn btn-default dropdown-toggle" })
+      @Html.DropDownListFor(m => m.FirstOrDefault().PizzaOptions.Size, Model.FirstOrDefault().SizeOptions, new { @class = "btn btn-default dropdown-toggle" })        
+   </div>
+   <div class="form-group">
+      <div btn-group" data-toggle="buttons">
+         @{
+            for (int i = 0; i < Model.FirstOrDefault().ToppingOptions.Count; i++)
+            {
+               var itm = Model.FirstOrDefault().ToppingOptions[i];
+               <label class="btn btn-success">
+                  <span class="glyphicon glyphicon-unchecked"></span>
+                  @Html.CheckBoxFor(model => model.FirstOrDefault().ToppingOptions[i].chosen) @Html.LabelFor(model => model.FirstOrDefault().ToppingOptions[i].Name, itm.Name)
+               </label>
+            }
+         }
+      </div>
+   </div>
+   <div class="form-group">
+      <div btn-group" data-toggle="buttons">
+         @{
+            for (int i = 0; i < Model.FirstOrDefault().CheeseOptions.Count; i++)
+            {
+               var itm = Model.FirstOrDefault().CheeseOptions[i];
+               <label class="btn btn-warning">
+                  <span class="glyphicon glyphicon-unchecked"></span>
+                  @Html.CheckBoxFor(model => model.FirstOrDefault().CheeseOptions[i].chosen) @Html.LabelFor(model => model.FirstOrDefault().CheeseOptions[i].Name, itm.Name)
+               </label>
+            }
+         }
+      </div>
+   </div>   
+   <div>
+      <button type="submit" class="btn btn-primary glyphicon glyphicon-cutlery"> Submit</button>
+   </div>
+   @section scripts
+{
+      <script>
+    $(document).ready(function () {
+      // Connect to 'change' event in order to toggle glyphs
+      $("[type='checkbox']").change(function () {
+        if ($(this).prop('checked')) {
+          $(this).prev().addClass('glyphicon-ok-circle');
+          $(this).prev().removeClass('glyphicon-unchecked');
+        }
+        else {
+          $(this).prev().removeClass('glyphicon-ok-circle');
+          $(this).prev().addClass('glyphicon-unchecked');
+        }
+      });
+    });
+      </script>
+   }
+   }
+
+
+
+
+
+
+
+
+
+
+
+

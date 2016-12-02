@@ -1,0 +1,87 @@
+﻿@model PizzaStoreMVC2.Client.ViewModels.PizzaSiteModel
+
+@{
+    ViewBag.Title = "Order";
+}
+@{ var address = Model.currentCustomer.Address.ToString();}
+<div class="container-fluid">
+   <div class="row h3" >
+      <div class="col-md-6">
+         Your Current Store is: @Html.LabelFor(m => m.storeString, Model.storeString)
+      </div>        
+      <div class="col-md-6">
+         Our Phone Number Is: @Html.LabelFor(m => m.currentStore.Phone.Number, Model.currentStore.Phone.Number)
+      </div >
+   </div >
+   <div class="row h3">
+      <div class="col-md-6">
+         The Current User Is: @Html.LabelFor(m => m.userString, Model.userString)
+      </div>
+      <div class="col-md-6">
+         Your Address Is: @Html.LabelFor(m => m.currentCustomer.Address, Model.currentCustomer.Address.Street) @Html.LabelFor(m => m.currentCustomer.Address, Model.currentCustomer.Address.City) @Html.LabelFor(m => m.currentCustomer.Address, Model.currentCustomer.Address.State) @Html.LabelFor(m => m.currentCustomer.Address, Model.currentCustomer.Address.Zip)
+      </div>
+   </div>   
+</div >
+
+
+<h2>Lets Start Your Order</h2>
+
+@using (Html.BeginForm("Order", "PizzaSite", FormMethod.Post))
+{
+   <div>
+      @Html.DropDownListFor(m => m.sauceString, Model.SauceOptions, new { @class = "btn btn-default dropdown-toggle" })
+      @Html.DropDownListFor(m => m.crustString, Model.CrustOptions, new { @class = "btn btn-default dropdown-toggle" })
+      @Html.DropDownListFor(m => m.sizeString, Model.SizeOptions, new { @class = "btn btn-default dropdown-toggle" })
+   </div>
+  @* @{ var model=ViewBag.model as PizzaStoreMVC2.Client.ViewModels.PizzaSiteModel}}*@
+   <div class="form-group">
+      <div btn-group" data-toggle="buttons">
+         @{
+            for (int i = 0; i < Model.ToppingOptions.Count; i++)
+            {
+               var itm = Model.ToppingOptions[i];
+               <label class="btn btn-success">
+                  <span class="glyphicon glyphicon-unchecked"></span>
+                  @Html.CheckBoxFor(model => model.ToppingOptions[i].chosen) @Html.LabelFor(model => model.ToppingOptions[i].Name, itm.Name)
+               </label>
+            }
+         }
+      </div>
+   </div>
+   <div class="form-group">
+      <div btn-group" data-toggle="buttons">
+         @{
+            for (int i = 0; i < Model.CheeseOptions.Count; i++)
+            {
+               var itm = Model.CheeseOptions[i];
+               <label class="btn btn-warning">
+                  <span class="glyphicon glyphicon-unchecked"></span>
+                  @Html.CheckBoxFor(model => model.CheeseOptions[i].chosen) @Html.LabelFor(model => model.CheeseOptions[i].Name, itm.Name)
+               </label>
+            }
+         }
+      </div>
+   </div>
+   <div>
+      <button type="submit" class="btn btn-primary glyphicon glyphicon-cutlery"> Submit</button>
+   </div>
+   @section scripts
+{
+      <script>
+    $(document).ready(function () {
+      // Connect to 'change' event in order to toggle glyphs
+      $("[type='checkbox']").change(function () {
+        if ($(this).prop('checked')) {
+          $(this).prev().addClass('glyphicon-ok-circle');
+          $(this).prev().removeClass('glyphicon-unchecked');
+        }
+        else {
+          $(this).prev().removeClass('glyphicon-ok-circle');
+          $(this).prev().addClass('glyphicon-unchecked');
+        }
+      });
+    });
+      </script>
+   }
+            }
+

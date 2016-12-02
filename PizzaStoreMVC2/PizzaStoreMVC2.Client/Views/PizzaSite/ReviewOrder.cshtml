@@ -1,0 +1,103 @@
+﻿@model PizzaStoreMVC2.Client.ViewModels.PizzaSiteModel
+
+@{
+   ViewBag.Title = "ReviewOrder";
+}
+
+<h2>Review Your Order</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.LabelFor(model => model.storeString, Model.storeString)
+        </th>
+        <th>
+            @Html.LabelFor(model => model.userString, Model.userString)
+        </th>
+        <th></th>
+    </tr>
+   @{ var x = ViewBag.model as PizzaStoreMVC2.Client.ViewModels.PizzaSiteModel;}
+@foreach (var item in x.currentOrder.Pizzas) {
+    <tr>
+       <th>
+          @Html.Label("Crust Type")
+       </th>
+       <th>
+          @Html.Label("Selected Size")
+       </th>
+       <th>
+          @Html.Label("Selected Sauce")
+       </th>
+       <th>
+          @Html.Label("Selected Toppings")
+       </th>
+       <th>
+          @Html.Label("Selected Cheeses")
+       </th>
+    </tr>
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Crust)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Size)
+        </td>
+       <td>
+            @Html.DisplayFor(modelItem => item.Sauce)
+       </td>
+       <td>
+          <table>
+            @foreach (var topping in item.toppings)
+            {
+               <tr>
+                  <td>
+                     @Html.DisplayFor(modelItem => topping.Name)
+                  </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => topping.Value)
+                 </td>                 
+               </tr>              
+            }  
+          </table>          
+       </td>
+       <td>
+          <table>
+             @foreach (var cheese in item.cheeses)
+             {
+                <tr>
+                   <td>
+                      @Html.DisplayFor(modelItem => cheese.Name)
+                   </td>
+                  <td>
+                     @Html.DisplayFor(modelItem => cheese.Value)
+                  </td>                  
+                </tr>               
+             }
+          </table>         
+       </td>
+        <td>            
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+   <tr>
+      <td>
+         @Html.Label("Your Total is:  ")
+      </td>
+      <td>
+         @Html.DisplayFor(modelItem => x.currentOrder.Value)
+      </td>
+   </tr>
+   <tr>
+      <td>
+         @using (Html.BeginForm("ReviewOrder", "PizzaSite", FormMethod.Post))
+         {
+            <button type="submit" value="Add" name="action:Add" class="btn btn-primary glyphicon glyphicon-cutlery"> Add Another Pizza</button>
+            <button type="submit" value="Buy" name="action:Buy" class="btn btn-danger glyphicon glyphicon-shopping-cart"> Check Out</button>
+         }
+
+      </td>
+   </tr>
+</table>
